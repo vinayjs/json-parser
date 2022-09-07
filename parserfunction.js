@@ -4,7 +4,6 @@ const parse = (input) => {
   else if (typeof input === "boolean") return output +=  parseBoolean(input);
   else if (typeof input === "string") return output +=  parseString(input);
   else if (Array.isArray(input)) return output += parseArray(input);
-  else if (typeof input  === "object") return output += parseObject(input)
  return output
 }
 
@@ -55,37 +54,6 @@ const parseString = (input) => {
  return output
 }
 
-// const input = '"VINAY"'
-// console.log(parseString(input))
-// console.log(JSON.parse(input));
-
-const parseArray = (input) => {
-  if(Array.isArray(input)) {
-  input.map(val => parseString(val));
-}
-return input
-}
-// const input ='{"result":true, "count":42, "name":"vinay"}'
-// console.log(JSON.parse(input));
-// let xyz = parseString(input);
-// console.log(xyz);
-// console.log(typeof xyz)
-
-const parseObject = (input) => {
-  var temp = input.split(",");
-  // console.log(temp);
-  // console.log(typeof temp)
-  // console.log(Object.keys(temp))
-  let xyz = temp;
-  // console.log(xyz);
-  // console.log(typeof xyz)
-  theobj = {};
-  for (let i=0; i<temp.length; i+=2) {
-    theobj[temp[i]] = parse(temp[(i+1)]);
-  }
-  return theobj;
-}
-
-
-
-
+  const input = true
+  console.log(parse(input))
+  console.log(JSON.parse(input));
