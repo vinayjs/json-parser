@@ -1,3 +1,12 @@
+const parse = (input) => {
+  let output = ""
+  if (input === null) return  output += parseNull(input);
+  else if (typeof input === "boolean") return output +=  parseBoolean(input);
+  else if (typeof input === "string") return output +=  parseString(input);
+  else if (Array.isArray(input)) return output += parseArray(input);
+ return output
+}
+
 const parseNull = (input) => {
   if (input === null) {
     return input;
