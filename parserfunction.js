@@ -1,5 +1,5 @@
 const parse = (input) => {
-  if (input === null) return parseNull(input);
+  if (input === null || input === 'null') return parseNull(input);
   else if (typeof input === "boolean") return parseBoolean(input);
   else if (input === 'true') return parseBoolean(input);
   else if (input === 'false') return parseBoolean(input);
@@ -8,8 +8,9 @@ const parse = (input) => {
 }
 
 const parseNull = (input) => {
-  if (input === null) {
-    return input;
+  let empty = null;
+  if (input === null || input === 'null') {
+    return empty;
   }
 }
 
@@ -61,8 +62,6 @@ const parseArray = (input) => {
   let value = replacer(input)
   let xyz = value.split(",");
   let empty = null;
-  let booleanTrue = true;
-  let booleanFalse = false;
    for (let i = 0; i < xyz.length; i++){
       if (isNaN(Number(xyz[i]))=== false) {
         result.push(Number(xyz[i]));
@@ -71,10 +70,10 @@ const parseArray = (input) => {
           result.push(empty)
       }
       else if (typeof xyz[i]=== "string" &&  xyz[i] === 'true'){
-          result.push(booleanTrue)
+          result.push(parseBoolean(xyz[i]))
       }
       else if (typeof xyz[i]=== "string" &&  xyz[i] === 'false'){
-          result.push(booleanFalse)
+          result.push(parseBoolean(xyz[i]))
       }
       else {
         result.push(`${replacer(xyz[i])}`)
@@ -82,6 +81,7 @@ const parseArray = (input) => {
   }
   return result
 };
+
 
 const replacer = (string) => {
   let str = "";
@@ -117,7 +117,7 @@ const parserObject = (input) => {
 
 
 
-const val = '{"x":"vinay","y":true, "z":32}'
+const val = '{"x":"vinay","y":true, "z":32, "a": null}'
 const input = "8"
 console.log(parserObject(val));
 console.log(JSON.parse(val));
