@@ -1,10 +1,10 @@
 const parse = (input) => {
-  let output = ""
-  if (input === null) return  output += parseNull(input);
-  else if (typeof input === "boolean") return output +=  parseBoolean(input);
-  else if (typeof input === "string") return output +=  parseString(input);
-  else if (Array.isArray(input)) return output += parseArray(input);
- return output
+  if (input === null) return parseNull(input);
+  else if (typeof input === "boolean") return parseBoolean(input);
+  else if (input === 'true') return parseBoolean(input);
+  else if (input === 'false') return parseBoolean(input);
+  else if (typeof input === "string") return parseString(input);
+  else if (Array.isArray(input)) return parseArray(input);
 }
 
 const parseNull = (input) => {
@@ -17,8 +17,16 @@ const parseNull = (input) => {
 //   console.log(JSON.parse(null));
 
 const parseBoolean = (input) => {
+  let booleanTrue = true;
+  let booleanFalse = false;
   if (typeof input === "boolean"){
     return input;
+  }
+  else if (input === 'true'){
+    return booleanTrue;
+  }
+  else if (input === 'false'){
+    return booleanFalse;
   }
 }
 
@@ -27,9 +35,10 @@ const parseBoolean = (input) => {
 // console.log(JSON.stringify(true));
 
 const parseNumber = (input) => {
-  if (typeof input === "number"){
-      return input;
+  if (isNaN(Number(input))=== false) {
+    return Number(input);
   }
+
 }
 
 // console.log(parseNumber(23));
@@ -38,7 +47,7 @@ const parseNumber = (input) => {
 const parseString = (input) => {
   let result = "";
   if (isNaN(Number(input)) === false) {
-    result += Number(input);
+    return parseNumber(input);
   }
   else {
     result += `${replacer(input)}`
@@ -82,15 +91,36 @@ const replacer = (string) => {
       .replace("]", "")               
       .replace(/["]/g, "'")  
       .replace(/[']/g, "") 
-      .replace(/\s+/g, '')   
+      .replace(/\s+/g, '') 
+      .replace("{", "")               
+      .replace("}", "")  
       
   }
   return str;
 }
 
+const parserObject = (input) => {
+  let obj = {};
+  let value = replacer(input)
+  let temp = value.split(",");  
+  for(let i = 0; i < temp.length; i++){
+    // console.log(temp[i])
+    let value =temp[i].split(':');
+    // console.log(value[1])
+    obj[value[0]] = parse(value[1]);
+    // console.log(parse(value[1]))
+  }
+  return obj
+  
+};
 
 
 
-const val = '["vinay", 22, true]'
-console.log(parseArray(val));
+
+const val = '{"x":"vinay","y":true, "z":32}'
+const input = "8"
+console.log(parserObject(val));
 console.log(JSON.parse(val));
+console.log(typeof input);
+console.log(parse(input));
+// console.log(JSON.stringify(val));
