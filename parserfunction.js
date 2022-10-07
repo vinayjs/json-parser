@@ -47,6 +47,7 @@ const parseNumber = (input) => {
 // console.log(parseNumber(23));
 // console.log(JSON.parse(23));
 
+  
 const parseString = (input) => {
   let result = "";
   if (isNaN(Number(input)) === false) {
@@ -93,7 +94,7 @@ const replacer = (string) => {
       .replace("]", "")               
       .replace(/["]/g, "'")  
       .replace(/[']/g, "") 
-      .replace(/\s+/g, '') 
+      .replace(/\s+/g, ' ')
       .replace("{", "")               
       .replace("}", "")  
       
@@ -104,9 +105,9 @@ const replacer = (string) => {
 const parserObject = (input) => {
   let obj = {};
   let value = replacer(input)
-  let temp = value.split(",");  
+  let temp = value.split(", ");  
   for(let i = 0; i < temp.length; i++){
-    // console.log(temp[i])
+    console.log(temp[i])
     let value =temp[i].split(':');
     // console.log(value[1])
     obj[value[0]] = parser(value[1]);
@@ -120,7 +121,10 @@ const parserObject = (input) => {
 
 
 
-const input = '{"x":"vinay","y":true, "z":32, "a": null}'
+const input = '{"name":"John", "age":30, "city":"New York"}'
 console.log(JSON.parse(input));
-console.log(parser(input));
+// console.log(typeof input);
+console.log(parserObject(input));
+console.log(parseString('"vinay chandran"'));
+console.log(JSON.parse('"vinay chandran"'));
 
