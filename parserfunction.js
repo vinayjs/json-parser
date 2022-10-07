@@ -1,130 +1,106 @@
+// Parser Function
 const parser = (input) => {
-  if (input === null || input === 'null') return parseNull(input);
+  if (input === null || input === "null") return parseNull(input);
   else if (typeof input === "boolean") return parseBoolean(input);
-  else if (input === 'true') return parseBoolean(input);
-  else if (input === 'false') return parseBoolean(input);
-  else if (typeof input === "string" && input[0] === "[") return parseArray(input);
-  else if (typeof input === "string" && input[0] === "{") return parserObject(input); 
-  else return parseString(input)
+  else if (input === "true") return parseBoolean(input);
+  else if (input === "false") return parseBoolean(input);
+  else if (typeof input === "string" && input[0] === "[")
+    return parseArray(input);
+  else if (typeof input === "string" && input[0] === "{")
+    return parserObject(input);
+  else return parseString(input);
+};
 
-}
-
+// null parser
 const parseNull = (input) => {
   let empty = null;
-  if (input === null || input === 'null') {
+  if (input === null || input === "null") {
     return empty;
   }
-}
+};
 
-//   console.log(parseNull(null));
-//   console.log(JSON.parse(null));
-
+//Boolean Parser
 const parseBoolean = (input) => {
   let booleanTrue = true;
   let booleanFalse = false;
-  if (typeof input === "boolean"){
+  if (typeof input === "boolean") {
     return input;
-  }
-  else if (input === 'true'){
+  } else if (input === "true") {
     return booleanTrue;
-  }
-  else if (input === 'false'){
+  } else if (input === "false") {
     return booleanFalse;
   }
-}
+};
 
-// console.log(parseBoolean(true));
-// console.log(JSON.parse(true));
-// console.log(JSON.stringify(true));
-
+// Number Parser
 const parseNumber = (input) => {
-  if (isNaN(Number(input))=== false) {
+  if (isNaN(Number(input)) === false) {
     return Number(input);
   }
+};
 
-}
-
-// console.log(parseNumber(23));
-// console.log(JSON.parse(23));
-
-  
+// String Parser
 const parseString = (input) => {
   let result = "";
   if (isNaN(Number(input)) === false) {
     return parseNumber(input);
+  } else {
+    result += `${replacer(input)}`;
   }
-  else {
-    result += `${replacer(input)}`
-  }
-  return result
-}
-
-
-const parseArray = (input) => {
-  let result = []
-  let value = replacer(input)
-  let xyz = value.split(",");
-  let empty = null;
-   for (let i = 0; i < xyz.length; i++){
-      if (isNaN(Number(xyz[i]))=== false) {
-        result.push(Number(xyz[i]));
-      }
-      else if (typeof xyz[i]=== "string" &&  xyz[i] === 'null'){
-          result.push(parseNull(xyz[i]))
-      }
-      else if (typeof xyz[i]=== "string" &&  xyz[i] === 'true'){
-          result.push(parseBoolean(xyz[i]))
-      }
-      else if (typeof xyz[i]=== "string" &&  xyz[i] === '{'){
-          result.push(parserObject(xyz[i]))
-      }
-      else {
-        result.push(parseString(xyz[i]))
-      }
-  }
-  return result
+  return result;
 };
 
+// Array Parser
+const parseArray = (input) => {
+  let result = [];
+  let value = replacer(input);
+  let xyz = value.split(",");
+  let empty = null;
+  for (let i = 0; i < xyz.length; i++) {
+    if (isNaN(Number(xyz[i])) === false) {
+      result.push(Number(xyz[i]));
+    } else if (typeof xyz[i] === "string" && xyz[i] === "null") {
+      result.push(parseNull(xyz[i]));
+    } else if (typeof xyz[i] === "string" && xyz[i] === "true") {
+      result.push(parseBoolean(xyz[i]));
+    } else if (typeof xyz[i] === "string" && xyz[i] === "{") {
+      result.push(parserObject(xyz[i]));
+    } else {
+      result.push(parseString(xyz[i]));
+    }
+  }
+  return result;
+};
 
+// Object Parser
+const parserObject = (input) => {
+  let obj = {};
+  let value = replacer(input);
+  let temp = value.split(", ");
+  for (let i = 0; i < temp.length; i++) {
+    let value = temp[i].split(":");
+    obj[value[0]] = parser(value[1]);
+  }
+  return obj;
+};
+
+// Replacer Function
 const replacer = (string) => {
   let str = "";
   if (typeof string === "string") {
-      str += string
-      .replace("[", "")               
-      .replace("]", "")               
-      .replace(/["]/g, "'")  
-      .replace(/[']/g, "") 
-      .replace(/\s+/g, ' ')
-      .replace("{", "")               
-      .replace("}", "")  
-      
+    str += string
+      .replace("[", "")
+      .replace("]", "")
+      .replace(/["]/g, "'")
+      .replace(/[']/g, "")
+      .replace(/\s+/g, " ")
+      .replace("{", "")
+      .replace("}", "");
   }
   return str;
-}
-
-const parserObject = (input) => {
-  let obj = {};
-  let value = replacer(input)
-  let temp = value.split(", ");  
-  for(let i = 0; i < temp.length; i++){
-    console.log(temp[i])
-    let value =temp[i].split(':');
-    // console.log(value[1])
-    obj[value[0]] = parser(value[1]);
-    // console.log(parse(value[1]))
-  }
-  return obj
-  
 };
 
-
-
-
-
-const input = '{"name":"John", "age":30, "city":"New York"}'
+const input = '{"name":"John", "age":30, "city":"New York"}';
 console.log(JSON.parse(input));
-// console.log(typeof input);
-console.log(parserObject(input));
-console.log(parseString('"vinay chandran"'));
-console.log(JSON.parse('"vinay chandran"'));
+console.log(parser(input));
 
