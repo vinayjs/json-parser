@@ -1,10 +1,12 @@
-const parse = (input) => {
+const parser = (input) => {
   if (input === null || input === 'null') return parseNull(input);
   else if (typeof input === "boolean") return parseBoolean(input);
   else if (input === 'true') return parseBoolean(input);
   else if (input === 'false') return parseBoolean(input);
-  else if (typeof input === "string") return parseString(input);
-  else if (Array.isArray(input)) return parseArray(input);
+  else if (typeof input === "string" && input[0] === "[") return parseArray(input);
+  else if (typeof input === "string" && input[0] === "{") return parserObject(input); 
+  else return parseString(input)
+
 }
 
 const parseNull = (input) => {
@@ -67,16 +69,16 @@ const parseArray = (input) => {
         result.push(Number(xyz[i]));
       }
       else if (typeof xyz[i]=== "string" &&  xyz[i] === 'null'){
-          result.push(empty)
+          result.push(parseNull(xyz[i]))
       }
       else if (typeof xyz[i]=== "string" &&  xyz[i] === 'true'){
           result.push(parseBoolean(xyz[i]))
       }
-      else if (typeof xyz[i]=== "string" &&  xyz[i] === 'false'){
-          result.push(parseBoolean(xyz[i]))
+      else if (typeof xyz[i]=== "string" &&  xyz[i] === '{'){
+          result.push(parserObject(xyz[i]))
       }
       else {
-        result.push(`${replacer(xyz[i])}`)
+        result.push(parseString(xyz[i]))
       }
   }
   return result
@@ -107,7 +109,7 @@ const parserObject = (input) => {
     // console.log(temp[i])
     let value =temp[i].split(':');
     // console.log(value[1])
-    obj[value[0]] = parse(value[1]);
+    obj[value[0]] = parser(value[1]);
     // console.log(parse(value[1]))
   }
   return obj
@@ -117,10 +119,8 @@ const parserObject = (input) => {
 
 
 
-const val = '{"x":"vinay","y":true, "z":32, "a": null}'
-const input = "8"
-console.log(parserObject(val));
-console.log(JSON.parse(val));
-console.log(typeof input);
-console.log(parse(input));
-// console.log(JSON.stringify(val));
+
+const input = '{"x":"vinay","y":true, "z":32, "a": null}'
+console.log(JSON.parse(input));
+console.log(parser(input));
+
