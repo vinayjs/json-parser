@@ -11,7 +11,7 @@ const parser = (input) => {
   else return parseString(input);
 };
 
-// null parser
+// null parser - returns parsed output for a null input.
 const parseNull = (input) => {
   let empty = null;
   if (input === null || input === "null") {
@@ -19,7 +19,7 @@ const parseNull = (input) => {
   }
 };
 
-//Boolean Parser
+//Boolean Parser - returns parsed output for a boolean input.
 const parseBoolean = (input) => {
   let booleanTrue = true;
   let booleanFalse = false;
@@ -32,14 +32,14 @@ const parseBoolean = (input) => {
   }
 };
 
-// Number Parser
+// Number Parser - returns parsed output for a number input.
 const parseNumber = (input) => {
   if (isNaN(Number(input)) === false) {
     return Number(input);
   }
 };
 
-// String Parser
+// String Parser - returns parsed output for a string data type.
 const parseString = (input) => {
   let result = "";
   if (isNaN(Number(input)) === false) {
@@ -50,12 +50,11 @@ const parseString = (input) => {
   return result;
 };
 
-// Array Parser
+// Array Parser - returns parsed output for a array input.
 const parseArray = (input) => {
   let result = [];
   let value = replacer(input);
   let xyz = value.split(",");
-  let empty = null;
   for (let i = 0; i < xyz.length; i++) {
     if (isNaN(Number(xyz[i])) === false) {
       result.push(Number(xyz[i]));
@@ -72,7 +71,7 @@ const parseArray = (input) => {
   return result;
 };
 
-// Object Parser
+// Object Parser - returns parsed output for a object data type.
 const parserObject = (input) => {
   let obj = {};
   let value = replacer(input);
@@ -100,7 +99,11 @@ const replacer = (string) => {
   return str;
 };
 
-const input = '{"name":"John", "age":30, "city":"New York"}';
-console.log(JSON.parse(input));
-console.log(parser(input));
+const input = '[null]';
+const myParser = parser(input);
+const jsonParser = JSON.parse(input);
+
+console.log("myParser", myParser);
+console.log("jsParser", jsonParser);
+
 
