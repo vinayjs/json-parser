@@ -4,10 +4,8 @@ const parser = (input) => {
   else if (typeof input === "boolean") return parseBoolean(input);
   else if (input === "true") return parseBoolean(input);
   else if (input === "false") return parseBoolean(input);
-  else if (typeof input === "string" && input[0] === "[")
-    return parseArray(input);
-  else if (typeof input === "string" && input[0] === "{")
-    return parserObject(input);
+  else if (typeof input === "string" && input[0] === "[") return parseArray(input);  
+  else if (typeof input === "string" && input[0] === "{") return parserObject(input); 
   else return parseString(input);
 };
 
