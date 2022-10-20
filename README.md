@@ -1,6 +1,6 @@
 # JSON Parser
 
-![Json parser](./src/image/JavaScript-Parse-String.jpg.jpg )
+![Json parser](src/image/JavaScript-Parse-String.jpg.jpg )
 
 
 ### JSON 
