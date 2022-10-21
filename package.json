@@ -1,0 +1,20 @@
+{
+  "name": "parser",
+  "version": "1.0.0",
+  "description": "![Json parser](./src/image/JavaScript-Parse-String.jpg.jpg )",
+  "main": "parserFunction.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinayjs/parser.git"
+  },
+  "keywords": [],
+  "author": "Vinay Chandran C",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/vinayjs/parser"
+  },
+  "homepage": "https://github.com/vinayjs/parser#readme"
+}
