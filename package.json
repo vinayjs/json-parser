@@ -1,0 +1,21 @@
+{
+  "name": "parser",
+  "version": "0.1.0",
+  "description": "Json parser in javascript",
+  "main": "parserFunction.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+  },
+
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "json",
+    "parser"
+  ],
+  "author": "Vinay Chandran C",
+  "license": ""
+}
